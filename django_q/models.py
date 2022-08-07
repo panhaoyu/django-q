@@ -202,10 +202,12 @@ class Schedule(models.Model):
     task = models.CharField(max_length=100, null=True, editable=False)
     cluster = models.CharField(max_length=100, default=None, null=True, blank=True)
 
+    @admin.display(description=_('Success'), boolean=True)
     def success(self):
         if self.task and Task.objects.filter(id=self.task):
             return Task.objects.get(id=self.task).success
 
+    @admin.display(description=_('Last run'))
     def last_run(self):
         if self.task and Task.objects.filter(id=self.task):
             task = Task.objects.get(id=self.task)
@@ -219,10 +221,7 @@ class Schedule(models.Model):
     def __str__(self):
         return self.func
 
-    success.boolean = True
-    success.short_description = _('Success')
     last_run.allow_tags = True
-    last_run.short_description = _('Last run')
 
     class Meta:
         app_label = "django_q"
