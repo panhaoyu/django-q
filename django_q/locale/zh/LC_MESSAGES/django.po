@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-07 14:33+0800\n"
+"POT-Creation-Date: 2022-08-07 14:58+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Haoyu Pan <panhaoyu.china@outlook.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -282,19 +282,27 @@ msgstr "下次运行"
 msgid "Cron expression"
 msgstr "Cron表达式"
 
-#: .\models.py:227
+#: .\models.py:224 .\monitor.py:170
+msgid "Success"
+msgstr "成功"
+
+#: .\models.py:226
+msgid "Last run"
+msgstr "上次运行"
+
+#: .\models.py:230
 msgid "Scheduled task"
 msgstr "定时任务"
 
-#: .\models.py:228
+#: .\models.py:231
 msgid "Scheduled tasks"
 msgstr "定时任务"
 
-#: .\models.py:251
+#: .\models.py:254
 msgid "Queued task"
 msgstr "任务队列"
 
-#: .\models.py:252
+#: .\models.py:255
 msgid "Queued tasks"
 msgstr "任务队列"
 
@@ -332,10 +340,6 @@ msgstr ""
 
 #: .\monitor.py:162 .\monitor.py:266
 msgid "Queued"
-msgstr ""
-
-#: .\monitor.py:170
-msgid "Success"
 msgstr ""
 
 #: .\monitor.py:180 .\monitor.py:274

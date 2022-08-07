@@ -1,5 +1,6 @@
 # Django
 from django import get_version
+from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.template.defaultfilters import truncatechars
@@ -7,7 +8,6 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
-
 # External
 from picklefield import PickledObjectField
 from picklefield.fields import dbsafe_decode
@@ -220,7 +220,9 @@ class Schedule(models.Model):
         return self.func
 
     success.boolean = True
+    success.description = _('Success')
     last_run.allow_tags = True
+    last_run.description = _('Last run')
 
     class Meta:
         app_label = "django_q"
