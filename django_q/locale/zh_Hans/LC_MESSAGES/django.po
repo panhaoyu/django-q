@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-07 11:33+0800\n"
+"POT-Creation-Date: 2022-08-07 14:33+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Haoyu Pan <panhaoyu.china@outlook.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,9 @@ msgid "Q Cluster {self.name} has stopped."
 msgstr "Q 集群 {self.name} 已停止。"
 
 #: .\cluster.py:98
-msgid "{current_process().name} got signal {Conf.SIGNAL_NAMES.get(signum, \"UNKNOWN\")}"
+msgid ""
+"{current_process().name} got signal {Conf.SIGNAL_NAMES.get(signum, \"UNKNOWN"
+"\")}"
 msgstr ""
 
 #: .\cluster.py:220
