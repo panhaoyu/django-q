@@ -148,7 +148,7 @@ def validate_cron(value):
 
 
 class Schedule(models.Model):
-    name = models.CharField(max_length=100, null=True, blank=True)
+    name = models.CharField(max_length=100, null=True, blank=True, verbose_name=_('Name'))
     func = models.CharField(max_length=256, help_text="e.g. module.tasks.function")
     hook = models.CharField(
         max_length=256,

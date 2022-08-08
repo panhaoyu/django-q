@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-07 15:07+0800\n"
+"POT-Creation-Date: 2022-08-08 22:05+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Haoyu Pan <panhaoyu.china@outlook.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -213,6 +213,10 @@ msgstr "失败任务"
 #: .\models.py:135
 msgid "Failed tasks"
 msgstr "失败任务"
+
+#: .\models.py:151
+msgid "Name"
+msgstr "名称"
 
 #: .\models.py:159
 msgid "e.g. 1, 2, 'John'"
@@ -438,3 +442,6 @@ msgstr ""
 msgid ""
 "return hook {instance.hook} failed on [{instance.name}] because {str(e)}"
 msgstr ""
+
+#~ msgid "name"
+#~ msgstr "名称"
