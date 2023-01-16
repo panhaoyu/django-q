@@ -1,6 +1,8 @@
 """Package signing."""
 import pickle
 
+from django.db import models
+
 from django_q import core_signing as signing
 from django_q.conf import Conf
 
@@ -32,8 +34,15 @@ class PickleSerializer:
 
     @staticmethod
     def dumps(obj) -> bytes:
+        for arg in (*obj.get('args', ()), *obj.get('kwargs').values()):
+            if isinstance(arg, models.Model):
+                arg.__dict__ = {k: v for k, v in arg.__dict__.items() if k in ('id',)}
         return pickle.dumps(obj, protocol=pickle.HIGHEST_PROTOCOL)
 
     @staticmethod
-    def loads(data) -> any:
-        return pickle.loads(data)
+    def loads(obj) -> any:
+        obj = pickle.loads(obj)
+        for arg in (*obj.get('args', ()), *obj.get('kwargs').values()):
+            if isinstance(arg, models.Model):
+                arg.refresh_from_db()
+        return obj
