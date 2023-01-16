@@ -33,12 +33,30 @@ class PickleSerializer:
     """Simple wrapper around Pickle for signing.dumps and signing.loads."""
 
     @staticmethod
+    def _dump_model_instance(value_or_obj):
+        if isinstance(value_or_obj, models.Model):
+            return type(value_or_obj), value_or_obj.pk
+        else:
+            return value_or_obj
+
+    @staticmethod
+    def _load_model_instance(value_or_obj):
+        if isinstance(value_or_obj, tuple) and len(value_or_obj) == 2:
+            cls, pk = value_or_obj
+            if issubclass(cls, models.Model):
+                obj = cls(pk=pk)
+                obj.refresh_from_db()
+                return obj
+        else:
+            return value_or_obj
+
+    @staticmethod
     def dumps(obj) -> bytes:
         if isinstance(obj, dict):
             if isinstance(args := obj.get('args', None), tuple):
-                obj['args'] = tuple(type(v)(pk=v.pk) if isinstance(v, models.Model) else v for v in args)
+                obj['args'] = tuple(PickleSerializer._dump_model_instance(v) for v in args)
             if isinstance(kw := obj.get('kwargs', None), dict):
-                obj['kwargs'] = {k: type(v)(pk=v.pk) if isinstance(v, models.Model) else v for k, v in kw.items()}
+                obj['kwargs'] = {k: PickleSerializer._dump_model_instance(v) for k, v in kw.items()}
         return pickle.dumps(obj, protocol=pickle.HIGHEST_PROTOCOL)
 
     @staticmethod
@@ -46,7 +64,7 @@ class PickleSerializer:
         obj = pickle.loads(obj)
         if isinstance(obj, dict):
             if isinstance(args := obj.get('args', None), tuple):
-                [v.refresh_from_db() for v in args if isinstance(v, models.Model)]
+                obj['args'] = tuple(PickleSerializer._load_model_instance(v) for v in args)
             if isinstance(kw := obj.get('kwargs', None), dict):
-                [v.refresh_from_db() for v in kw.values() if isinstance(v, models.Model)]
+                obj['kwargs'] = {k: PickleSerializer._load_model_instance(v) for k, v in kw.items()}
         return obj
