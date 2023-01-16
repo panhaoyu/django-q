@@ -206,16 +206,17 @@ class Conf:
 # logger
 logger = logging.getLogger("django-q")
 
+
 # Set up standard logging handler in case there is none
-if not logger.handlers:
-    logger.setLevel(level=getattr(logging, Conf.LOG_LEVEL))
-    logger.propagate = False
-    formatter = logging.Formatter(
-        fmt="%(asctime)s [Q] %(levelname)s %(message)s", datefmt="%H:%M:%S"
-    )
-    handler = logging.StreamHandler()
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
+# if not logger.handlers:
+#     logger.setLevel(level=getattr(logging, Conf.LOG_LEVEL))
+#     logger.propagate = False
+#     formatter = logging.Formatter(
+#         fmt="%(asctime)s [Q] %(levelname)s %(message)s", datefmt="%H:%M:%S"
+#     )
+#     handler = logging.StreamHandler()
+#     handler.setFormatter(formatter)
+#     logger.addHandler(handler)
 
 
 # Error Reporting Interface
@@ -240,7 +241,7 @@ if Conf.ERROR_REPORTER:
         # and instantiate an ErrorReporter using the provided config
         for name, conf in error_conf.items():
             for entry in pkg_resources.iter_entry_points(
-                "djangoq.errorreporters", name
+                    "djangoq.errorreporters", name
             ):
                 Reporter = entry.load()
                 reporters.append(Reporter(**conf))
