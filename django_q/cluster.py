@@ -390,10 +390,10 @@ def monitor(result_queue: Queue, broker: Broker = None):
         # log the result
         if task["success"]:
             # log success
-            logger.info(_(f"Processed [{task['name']}]"))
+            logger.info(_(f"Processed [{task['name']}]: {task['func']}"))
         else:
             # log failure
-            logger.error(_(f"Failed [{task['name']}] - {task['result']}"))
+            logger.error(_(f"Failed [{task['name']}]: {task['func']} - {task['result']}"))
     logger.info(_(f"{name} stopped monitoring results"))
 
 
