@@ -33,16 +33,26 @@ class PickleSerializer:
     """Simple wrapper around Pickle for signing.dumps and signing.loads."""
 
     @staticmethod
+    def _get_model_instances(obj):
+        all_args = ()
+        if isinstance(obj, dict) and ('args' in obj or 'kwargs' in obj):
+            args, kwargs = obj.get('args', ()), obj.get('kwargs', {})
+            if isinstance(args, tuple):
+                all_args = (*args,)
+            if isinstance(kwargs, dict):
+                all_args = (*kwargs.values(),)
+        all_args = tuple(arg for arg in all_args if isinstance(arg, models.models.Model))
+        return all_args
+
+    @staticmethod
     def dumps(obj) -> bytes:
-        for arg in (*obj.get('args', ()), *obj.get('kwargs').values()):
-            if isinstance(arg, models.Model):
-                arg.__dict__ = {k: v for k, v in arg.__dict__.items() if k in ('id',)}
+        for arg in PickleSerializer._get_model_instances(obj):
+            arg.__dict__ = {k: v for k, v in arg.__dict__.items() if k in ('id',)}
         return pickle.dumps(obj, protocol=pickle.HIGHEST_PROTOCOL)
 
     @staticmethod
     def loads(obj) -> any:
         obj = pickle.loads(obj)
-        for arg in (*obj.get('args', ()), *obj.get('kwargs').values()):
-            if isinstance(arg, models.Model):
-                arg.refresh_from_db()
+        for arg in PickleSerializer._get_model_instances(obj):
+            arg.refresh_from_db()
         return obj
