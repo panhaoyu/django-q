@@ -41,7 +41,7 @@ class PickleSerializer:
                 all_args = (*args,)
             if isinstance(kwargs, dict):
                 all_args = (*kwargs.values(),)
-        all_args = tuple(arg for arg in all_args if isinstance(arg, models.models.Model))
+        all_args = tuple(arg for arg in all_args if isinstance(arg, models.Model))
         return all_args
 
     @staticmethod
