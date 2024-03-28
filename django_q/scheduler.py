@@ -1,15 +1,24 @@
 import ast
 from multiprocessing.process import current_process
 
-from django import db
+from django import core, db
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-import django_q.tasks
+from django.apps.registry import apps
+
+try:
+    apps.check_apps_ready()
+except core.exceptions.AppRegistryNotReady:
+    import django
+
+    django.setup()
+
 from django_q.brokers import Broker, get_broker
 from django_q.conf import Conf, logger
 from django_q.humanhash import humanize
 from django_q.models import Schedule
+from django_q.tasks import async_task
 from django_q.utils import close_old_django_connections, localtime
 
 
@@ -73,7 +82,15 @@ def scheduler(broker: Broker = None):
                             break
 
                     s.next_run = next_run
-                    s.repeats += -1
+
+                    # Little Fix for already broken numbers
+                    if s.repeats < -1:
+                        s.repeats = -1
+                    
+                    # Check if the value is not zero
+                    if s.repeats > 0:
+                        s.repeats -= 1
+
                 # send it to the cluster; any cluster name is allowed in multi-queue scenarios
                 # because `broker_name` is confusing, using `cluster` name is recommended and takes precedence
                 q_options["cluster"] = s.cluster or q_options.get(
@@ -86,7 +103,7 @@ def scheduler(broker: Broker = None):
                     q_options["broker"] = broker
                 q_options["group"] = q_options.get("group", s.name or s.id)
                 kwargs["q_options"] = q_options
-                s.task = django_q.tasks.async_task(s.func, *args, **kwargs)
+                s.task = async_task(s.func, *args, **kwargs)
                 # log it
                 if not s.task:
                     logger.error(

@@ -1,6 +1,34 @@
 # Changelog
 
-## [Unreleased](https://github.com/GDay/django-q2/tree/HEAD)
+## [v1.6.2](https://github.com/django-q2/django-q2/tree/v1.6.2) (2024-03-05)
+
+**Merged pull requests:**
+
+- Allow different broker on chain https://github.com/django-q2/django-q2/pull/156
+- Fix formatting issues in README.rst https://github.com/django-q2/django-q2/pull/159
+- Update docs to add cluster option to the async_task https://github.com/django-q2/django-q2/pull/157
+- Update release/test dependencies https://github.com/django-q2/django-q2/pull/147
+- Fix for Negative Repeat Count in Scheduler https://github.com/django-q2/django-q2/pull/146
+- Update django.po https://github.com/django-q2/django-q2/pull/138
+- Use importerror for b62_decode and avoid deprecation notification https://github.com/django-q2/django-q2/pull/134
+- Specify build system in pyproject.toml https://github.com/django-q2/django-q2/pull/131
+
+## [v1.6.1](https://github.com/django-q2/django-q2/tree/v1.6.1) (2023-10-13)
+
+**Merged pull requests:**
+
+- Fix strict versions for python/django https://github.com/django-q2/django-q2/pull/130
+
+## [v1.6.0](https://github.com/django-q2/django-q2/tree/v1.6.0) (2023-10-12)
+
+**Merged pull requests:**
+
+- Add support for Django 5 and python 12 https://github.com/django-q2/django-q2/pull/120
+- Fix for "apps not ready" in Windows and Mac https://github.com/django-q2/django-q2/pull/116
+- Update broken MongoClient link in Docs https://github.com/django-q2/django-q2/pull/127
+- Fix German Translation Typo https://github.com/django-q2/django-q2/pull/124
+- Update Add-ons install command in install.rst https://github.com/django-q2/django-q2/pull/115
+- DOCS: Correct health check import in examples.rst https://github.com/django-q2/django-q2/pull/110
 
 ## [v1.5.5](https://github.com/django-q2/django-q2/tree/v1.5.5) (2023-09-01)
 
